@@ -5,7 +5,6 @@ from ..database import find_news
 def search_by_title(title):
     """Seu código deve vir aqui"""
     all_news = find_news()
-    print(all_news)
     filtered_news = [
         (new["title"], new["url"])
         for new in all_news if title.lower() in new["title"].lower()
@@ -16,6 +15,18 @@ def search_by_title(title):
 # Requisito 7'
 def search_by_date(date):
     """Seu código deve vir aqui"""
+    all_news = find_news()
+    date_array = date.split("-")
+    if int(date_array[1]) > 12 or int(date_array[2]) > 31:
+        raise(ValueError("Data inválida"))
+    if int(date_array[1]) == 2 and int(date_array[2]) > 28:
+        raise(ValueError("Data inválida"))
+    filtered_news = [
+        (new["title"], new["url"])
+        for new in all_news if new["timestamp"].split("T")[0] == date
+    ]
+
+    return filtered_news
 
 
 # Requisito 8
