@@ -1,6 +1,8 @@
+from venv import create
 from parsel import Selector
 import requests
 import time
+from .database import create_news
 
 
 # Requisito 1 bora comecar
@@ -89,7 +91,7 @@ def scrape_noticia(html_content):
 
     summary = ''.join(
         selector.css(
-            "div.tec--article__body p:nth-child(1) *::text"
+            "div.tec--article__body > p:nth-of-type(1) *::text"
         ).getall()
     )
 
@@ -112,3 +114,18 @@ def scrape_noticia(html_content):
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
+    curr_html = fetch("https://www.tecmundo.com.br/novidades")
+    news_list = scrape_novidades(curr_html)
+    while len(news_list) < amount:
+        next_page_url = scrape_next_page_link(curr_html)
+        curr_html = fetch(next_page_url)
+        more_news_urls = scrape_novidades(curr_html)
+        news_list = news_list + more_news_urls
+    news_list_limited = news_list[:amount]
+    news_list_to_return = []
+    for new_url in news_list_limited:
+        new_html = fetch(new_url)
+        new_obj = scrape_noticia(new_html)
+        news_list_to_return.append(new_obj)
+    create_news(news_list_to_return)
+    return news_list_to_return
