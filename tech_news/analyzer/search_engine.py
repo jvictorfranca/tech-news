@@ -1,5 +1,6 @@
 from ..database import find_news
 
+
 # Requisito 6
 def search_by_title(title):
     """Seu código deve vir aqui"""
@@ -12,7 +13,7 @@ def search_by_title(title):
     return filtered_news
 
 
-# Requisito 7
+# Requisito 7'
 def search_by_date(date):
     """Seu código deve vir aqui"""
 
