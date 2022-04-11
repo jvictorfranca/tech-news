@@ -1,4 +1,3 @@
-from venv import create
 from parsel import Selector
 import requests
 import time
