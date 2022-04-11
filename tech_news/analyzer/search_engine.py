@@ -35,7 +35,9 @@ def search_by_source(source):
     all_news = find_news()
     filtered_news = [
         (new["title"], new["url"])
-        for new in all_news if source.lower() in [source.lower() for source in new["sources"]]
+        for new in all_news if source.lower() in [
+            source.lower() for source in new["sources"]
+            ]
     ]
     return filtered_news
 
@@ -43,3 +45,10 @@ def search_by_source(source):
 # Requisito 9
 def search_by_category(category):
     """Seu código deve vir aqui"""
+    all_news = find_news()
+    filtered_news = [
+        (new["title"], new["url"])
+        for new in all_news if category.lower() in [
+            category.lower() for category in new["categories"]]
+    ]
+    return filtered_news
